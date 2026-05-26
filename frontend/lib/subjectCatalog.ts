@@ -1,0 +1,47 @@
+export const departmentSubjects: Record<string, string[]> = {
+  General: ["Mathematics", "English"],
+  "Science Department": [
+    "Biology",
+    "Chemistry",
+    "Physics",
+    "Further Mathematics",
+    "Agricultural Science",
+    "Geography",
+    "Computer Studies",
+    "Physical Education",
+    "Health Education",
+    "Technical Drawing",
+    "Foods & Nutrition",
+  ],
+  "Commercial Department": [
+    "Financial Accounting",
+    "Commerce",
+    "Economics",
+    "Government",
+    "Office Practice",
+    "Bookkeeping",
+    "Marketing",
+    "Geography",
+    "Agricultural Science",
+  ],
+  "Art Department": [
+    "Literature in English",
+    "Government",
+    "Nigerian History",
+    "Christian Religious Studies (CRS)",
+    "Islamic Studies (IRS)",
+    "Hausa",
+    "Igbo",
+    "Yoruba",
+    "French",
+    "Arabic",
+    "Visual Arts",
+    "Music",
+    "Home Management",
+    "Catering Craft",
+  ],
+};
+
+export const allProvidedSubjects = Array.from(
+  new Set(Object.values(departmentSubjects).flat()),
+).sort((a, b) => a.localeCompare(b));
