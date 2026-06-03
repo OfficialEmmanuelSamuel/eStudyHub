@@ -12,8 +12,37 @@ const quicksand = Quicksand({
 });
 
 export const metadata: Metadata = {
-  title: "StudyHub",
-  description: "StudyHub dashboard",
+  title: {
+    default: "eStudy Hub",
+    template: "%s | eStudy Hub",
+  },
+  description:
+    "eStudy Hub helps students learn with adaptive quizzes, progress tracking, and AI-powered guidance for exam preparation.",
+  keywords: [
+    "eStudy Hub",
+    "study planner",
+    "quiz practice",
+    "AI tutor",
+    "student dashboard",
+    "exam prep",
+  ],
+  authors: [{ name: "eStudy Hub" }],
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    title: "eStudy Hub",
+    description:
+      "eStudy Hub helps students learn with adaptive quizzes, progress tracking, and AI-powered guidance for exam preparation.",
+    type: "website",
+    locale: "en_US",
+    siteName: "eStudy Hub",
+  },
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f8fafc" },
+    { media: "(prefers-color-scheme: dark)", color: "#0f172a" },
+  ],
 };
 
 export const viewport: Viewport = {
