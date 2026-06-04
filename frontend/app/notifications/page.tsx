@@ -2,26 +2,26 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { FaBell, FaCheck, FaClock, FaInbox } from "react-icons/fa6";
+import type { AppNotification } from "@/lib/notificationStorage";
 import {
   loadNotifications,
   saveNotifications,
 } from "@/lib/notificationStorage";
 
 export default function NotificationsPage() {
-  const [notifications, setNotifications] = useState([]);
+  const [notifications, setNotifications] = useState<AppNotification[]>([]);
 
   useEffect(() => {
     setNotifications(loadNotifications());
   }, []);
 
   const unreadCount = useMemo(
-    () =>
-      notifications.filter((notification: any) => notification.unread).length,
+    () => notifications.filter((notification) => notification.unread).length,
     [notifications],
   );
 
   const markAllRead = () => {
-    const updated = notifications.map((notification: any) => ({
+    const updated = notifications.map((notification) => ({
       ...notification,
       unread: false,
     }));
@@ -30,7 +30,7 @@ export default function NotificationsPage() {
   };
 
   const markRead = (id: string) => {
-    const updated = notifications.map((notification: any) =>
+    const updated = notifications.map((notification) =>
       notification.id === id
         ? { ...notification, unread: false }
         : notification,
@@ -84,7 +84,7 @@ export default function NotificationsPage() {
                 <p>No notifications available yet.</p>
               </div>
             ) : (
-              notifications.map((notification: any) => (
+              notifications.map((notification) => (
                 <article
                   key={notification.id}
                   className={`rounded-3xl border px-5 py-4 shadow-sm transition ${
