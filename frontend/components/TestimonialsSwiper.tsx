@@ -30,7 +30,7 @@ export default function TestimonialsSwiper({
     >
       {testimonials.map((review) => (
         <SwiperSlide key={review.name}>
-          <blockquote className="h-full p-6 backdrop-blur-sm">
+          <blockquote className="h-full p-6 bg-slate-900  rounded-2xl backdrop-blur-sm">
             <p className="text-slate-200 text-center italic">&ldquo;{review.quote}&rdquo;</p>
             <footer className="mt-4 mb-8 text-sm text-slate-400 text-center">
               {review.name} · {review.role}
