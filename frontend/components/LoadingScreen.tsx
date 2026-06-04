@@ -4,16 +4,23 @@ export default function LoadingScreen({
   message?: string;
 }) {
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center text-slate-900">
-      <div className="text-center">
-        <div className="animate-spin">
-          <div className="rounded-full h-20 w-20 border-r-2 border-b-2 border-t-2 border-l-2 border-white border-r-emerald-300 border-l-emerald-300 mx-auto mb-4 flex items-center justify-center animate-spin">
-            <div className="rounded-full h-12 w-12 border-r-2 border-b-2 border-t-2 border-l-2 border-white border-r-emerald-300 border-l-emerald-300 mx-auto flex items-center justify-center animate-spin">
-              <div className="rounded-full h-4 w-4 mx-auto bg-emerald-900 animate-pulse" />
-            </div>
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4 py-10">
+      <div className="w-full max-w-sm rounded-[2rem] border border-slate-200/70 bg-white/95 p-8 shadow-2xl shadow-slate-900/10 backdrop-blur-xl">
+        <div className="flex items-center justify-center">
+          <div className="relative h-24 w-24">
+            <span className="absolute inset-0 rounded-full border-4 border-slate-200" />
+            <span className="absolute inset-0 rounded-full border-4 border-t-slate-900 border-slate-200 opacity-60 animate-spin" />
+            <span className="absolute inset-[10%] rounded-full bg-emerald-500/10" />
+            <span className="absolute inset-[22%] rounded-full bg-emerald-500/20" />
           </div>
         </div>
-        <p>{message}</p>
+
+        <div className="mt-8 text-center">
+          <p className="text-lg font-semibold text-slate-900">{message}</p>
+          <p className="mt-2 text-sm text-slate-500">
+            Please wait while we prepare your experience.
+          </p>
+        </div>
       </div>
     </div>
   );

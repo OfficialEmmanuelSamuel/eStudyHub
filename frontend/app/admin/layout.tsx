@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { AdminAuthProvider } from "@/context/AdminAuthProvider";
+import type { ReactNode } from "react";
+import AdminLayoutWrapper from "@/components/AdminLayoutWrapper";
 
 export const metadata: Metadata = {
   title: {
@@ -10,10 +11,6 @@ export const metadata: Metadata = {
     "Admin dashboard for managing eStudy Hub subjects, topics, and quizzes securely.",
 };
 
-export default function AdminLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return <AdminAuthProvider>{children}</AdminAuthProvider>;
+export default function AdminLayout({ children }: { children: ReactNode }) {
+  return <AdminLayoutWrapper>{children}</AdminLayoutWrapper>;
 }

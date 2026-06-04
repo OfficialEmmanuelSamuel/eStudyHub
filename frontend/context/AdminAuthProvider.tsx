@@ -7,6 +7,7 @@ import {
   useState,
   ReactNode,
 } from "react";
+import { useRouter } from "next/navigation";
 import { onAuthStateChanged, User, signOut } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
@@ -17,7 +18,7 @@ type AdminContextType = {
   adminData: AdminData | null;
   loading: boolean;
   isAdmin: boolean;
-  logout: () => Promise<void>;
+  logout: () => Promise<boolean>;
 };
 
 type AdminData = {
@@ -31,6 +32,7 @@ export const AdminContext = createContext<AdminContextType | undefined>(
 );
 
 export function AdminAuthProvider({ children }: { children: ReactNode }) {
+  const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [adminData, setAdminData] = useState<AdminData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -78,8 +80,11 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
       setAdminData(null);
       setIsAdmin(false);
       toast.success("Logged out successfully");
+      router.replace("/admin/login");
+      return true;
     } catch {
       toast.error("Logout failed");
+      return false;
     }
   };
 

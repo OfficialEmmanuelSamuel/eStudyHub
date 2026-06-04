@@ -1,16 +1,23 @@
 "use client";
 
+import Image from "next/image";
 import { signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
-import { FaBars, FaMagnifyingGlass, FaRightFromBracket, FaUser } from "react-icons/fa6";
+import {
+  FaBars,
+  FaMagnifyingGlass,
+  FaRightFromBracket,
+  FaUser,
+} from "react-icons/fa6";
 import { auth } from "@/lib/firebase";
 import { useAuth } from "@/hooks/useAuth";
 
 type NavbarProps = {
   onMenuClick: () => void;
+  mobileOpen: boolean;
 };
 
-export default function Navbar({ onMenuClick }: NavbarProps) {
+export default function Navbar({ onMenuClick, mobileOpen }: NavbarProps) {
   const router = useRouter();
   const { user } = useAuth();
 
@@ -28,12 +35,27 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
             onClick={onMenuClick}
             className="rounded-lg border border-slate-200 p-2 text-slate-600 md:hidden"
             aria-label="Open menu"
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-sidebar"
           >
             <FaBars />
           </button>
-          <div>
-            <h2 className="text-lg font-semibold text-slate-900">eStudy Hub</h2>
-            <p className="text-xs font-semibold uppercase tracking-wider text-emerald-600">Learning Workspace</p>
+          <div className="flex items-center gap-3">
+            <Image
+              src="/logo.png"
+              width={36}
+              height={36}
+              alt="eStudy Hub logo"
+              className="h-9 w-9 rounded-lg object-contain"
+            />
+            <div>
+              <h2 className="text-lg font-semibold text-slate-900">
+                eStudy Hub
+              </h2>
+              <p className="text-xs font-semibold uppercase tracking-wider text-emerald-600">
+                Learning Workspace
+              </p>
+            </div>
           </div>
         </div>
 

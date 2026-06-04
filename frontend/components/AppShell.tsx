@@ -44,7 +44,10 @@ export default function AppShell({ children }: AppShellProps) {
         onClose={() => setMobileMenuOpen(false)}
       />
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden md:ml-72">
-        <Navbar onMenuClick={() => setMobileMenuOpen(true)} />
+        <Navbar
+          onMenuClick={() => setMobileMenuOpen(true)}
+          mobileOpen={mobileMenuOpen}
+        />
         <main
           ref={mainRef}
           className="flex-1 overflow-y-auto p-4 pt-24 md:p-6 md:pt-24"

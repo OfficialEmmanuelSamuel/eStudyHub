@@ -25,6 +25,16 @@ export const metadata: Metadata = {
     "AI tutor",
     "student dashboard",
     "exam prep",
+    "waec",
+    "jamb",
+    "student",
+    "learning",
+    "eStudy",
+    "AI learning",
+    "personalized study",
+    "progress tracking",
+    "study reminders",
+    "learning community",
   ],
   authors: [{ name: "eStudy Hub" }],
   robots: {
@@ -34,10 +44,23 @@ export const metadata: Metadata = {
   openGraph: {
     title: "eStudy Hub",
     description:
-      "eStudy Hub helps students learn with adaptive quizzes, progress tracking, and AI-powered guidance for exam preparation.",
+      "Helps students learn with adaptive quizzes, progress tracking, and AI-powered guidance for exam preparation.",
     type: "website",
     locale: "en_US",
     siteName: "eStudy Hub",
+    images: [
+      {
+        url: "/estudyhub_logo.jpeg",
+        width: 1200,
+        height: 630,
+        alt: "eStudy Hub logo",
+      },
+    ],
+  },
+  icons: {
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
   },
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#f8fafc" },

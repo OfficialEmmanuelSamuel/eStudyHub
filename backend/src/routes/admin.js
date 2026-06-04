@@ -101,12 +101,10 @@ router.post("/topics/bulk", async (req, res) => {
       skipDuplicates: true,
     });
 
-    return res
-      .status(201)
-      .json({
-        message: "Topics imported successfully.",
-        count: payload.length,
-      });
+    return res.status(201).json({
+      message: "Topics imported successfully.",
+      count: payload.length,
+    });
   } catch (error) {
     return res
       .status(500)
@@ -204,12 +202,10 @@ router.post("/quizzes/bulk", async (req, res) => {
       data: payload,
     });
 
-    return res
-      .status(201)
-      .json({
-        message: "Quizzes imported successfully.",
-        count: payload.length,
-      });
+    return res.status(201).json({
+      message: "Quizzes imported successfully.",
+      count: payload.length,
+    });
   } catch (error) {
     return res
       .status(500)
@@ -236,6 +232,47 @@ router.delete("/subjects/:subjectId", async (req, res) => {
   }
 });
 
+router.delete("/departments/:department", async (req, res) => {
+  try {
+    const department = String(req.params.department || "").trim();
+    const departmentName = String(req.body.departmentName || "").trim();
+
+    if (!department || !departmentName) {
+      return res.status(400).json({ message: "Department name is required." });
+    }
+
+    if (department !== departmentName) {
+      return res
+        .status(400)
+        .json({ message: "Department confirmation does not match." });
+    }
+
+    const deleted = await prisma.subject.deleteMany({
+      where: { department },
+    });
+    if (deleted.count === 0) {
+      return res
+        .status(404)
+        .json({ message: "No subjects found for this department." });
+    }
+
+    // Also remove any student-scoped subjects (category entries) tied to this department
+    const deletedStudentCategories = await prisma.studentSubject.deleteMany({
+      where: { department },
+    });
+
+    return res.status(200).json({
+      message: "Department deleted successfully.",
+      deletedSubjects: deleted.count,
+      deletedStudentCategories: deletedStudentCategories.count,
+    });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Failed to delete department.", error: error.message });
+  }
+});
+
 router.delete("/topics/:topicId", async (req, res) => {
   try {
     const { topicId } = req.params;
@@ -252,6 +289,25 @@ router.delete("/topics/:topicId", async (req, res) => {
     return res
       .status(500)
       .json({ message: "Failed to delete topic.", error: error.message });
+  }
+});
+
+router.delete("/quizzes/:quizId", async (req, res) => {
+  try {
+    const { quizId } = req.params;
+    if (!quizId) {
+      return res.status(400).json({ message: "quizId is required." });
+    }
+
+    await prisma.subjectQuiz.delete({
+      where: { id: String(quizId) },
+    });
+
+    return res.status(200).json({ message: "Quiz deleted successfully." });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Failed to delete quiz.", error: error.message });
   }
 });
 
@@ -274,12 +330,10 @@ router.delete("/topics/:topicId/content", async (req, res) => {
       .status(200)
       .json({ message: "Topic content removed successfully." });
   } catch (error) {
-    return res
-      .status(500)
-      .json({
-        message: "Failed to remove topic content.",
-        error: error.message,
-      });
+    return res.status(500).json({
+      message: "Failed to remove topic content.",
+      error: error.message,
+    });
   }
 });
 

@@ -6,7 +6,6 @@ import toast from "react-hot-toast";
 import { useAdminAuth } from "@/context/AdminAuthProvider";
 import { allProvidedSubjects, departmentSubjects } from "@/lib/subjectCatalog";
 import { API_BASE } from "@/lib/apiBase";
-import AdminNavbar from "@/components/AdminNavbar";
 
 type Subject = { id: string; name: string; department: string };
 
@@ -217,136 +216,214 @@ export default function AddTopicsPage() {
 
   return (
     <div className="space-y-6">
-      <AdminNavbar />
-      <section className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 p-6 text-white shadow-md">
-        <p className="text-sm text-emerald-200">Admin</p>
-        <h1 className="mt-1 text-2xl font-bold md:text-3xl">
-          Add Topics and Content
-        </h1>
-      </section>
-
-      <form
-        onSubmit={handleSaveTopic}
-        className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
-      >
-        <label className="text-sm font-medium text-slate-700">Category</label>
-        <select
-          value={selectedDepartment}
-          onChange={(e) => setSelectedDepartment(e.target.value)}
-          className="mt-2 w-full rounded-lg border border-slate-200 px-3 py-2"
-        >
-          {departments.map((department) => (
-            <option key={department} value={department}>
-              {department}
-            </option>
-          ))}
-        </select>
-
-        <label className="mt-3 block text-sm font-medium text-slate-700">
-          Subject
-        </label>
-        <select
-          value={selectedSubjectName}
-          onChange={(e) => setSelectedSubjectName(e.target.value)}
-          className="mt-2 w-full rounded-lg border border-slate-200 px-3 py-2"
-        >
-          {subjectOptions.map((subject) => (
-            <option key={subject} value={subject}>
-              {subject}
-            </option>
-          ))}
-        </select>
-
-        <div className="mt-4 flex items-center justify-between gap-3">
-          <div>
-            <h2 className="text-base font-semibold text-slate-900">
-              Add topics for {selectedSubjectName}
-            </h2>
-            <p className="text-sm text-slate-500">
-              Create multiple topics in one batch. Leave empty rows and they
-              will be skipped.
+      <section className="rounded-[2rem] bg-gradient-to-r from-slate-950 via-slate-900 to-slate-800 p-6 text-white shadow-xl shadow-slate-950/20">
+        <p className="text-sm uppercase tracking-[0.35em] text-emerald-300">
+          Admin Portal
+        </p>
+        <div className="mt-5 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div className="space-y-3">
+            <h1 className="text-3xl font-semibold">Add Topics and Content</h1>
+            <p className="max-w-2xl text-sm text-slate-300">
+              Create and manage topics quickly using a modern form + CSV upload.
             </p>
           </div>
-          <button
-            type="button"
-            onClick={addTopicRow}
-            className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800"
-          >
-            + Add row
-          </button>
+          <div className="rounded-3xl border border-white/10 bg-white/10 px-4 py-3 text-slate-100">
+            <p className="text-xs uppercase tracking-[0.35em] text-slate-400">
+              Current subject
+            </p>
+            <p className="mt-2 text-lg font-semibold">{selectedSubjectName}</p>
+          </div>
         </div>
+      </section>
 
-        {topics.map((topicItem, index) => (
-          <div
-            key={index}
-            className="mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-4"
-          >
-            <div className="flex items-center justify-between gap-4">
-              <h3 className="text-sm font-semibold text-slate-900">
-                Topic {index + 1}
-              </h3>
-              {topics.length > 1 ? (
+      <div className="grid gap-6 xl:grid-cols-[1.4fr_0.6fr]">
+        <form
+          onSubmit={handleSaveTopic}
+          className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm"
+        >
+          <div className="p-6 space-y-6">
+            <div className="grid gap-4 md:grid-cols-2">
+              <div>
+                <label className="text-sm font-semibold text-slate-700">
+                  Category
+                </label>
+                <select
+                  value={selectedDepartment}
+                  onChange={(e) => setSelectedDepartment(e.target.value)}
+                  className="mt-2 w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm shadow-sm"
+                >
+                  {departments.map((department) => (
+                    <option key={department} value={department}>
+                      {department}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="text-sm font-semibold text-slate-700">
+                  Subject
+                </label>
+                <select
+                  value={selectedSubjectName}
+                  onChange={(e) => setSelectedSubjectName(e.target.value)}
+                  className="mt-2 w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm shadow-sm"
+                >
+                  {subjectOptions.map((subject) => (
+                    <option key={subject} value={subject}>
+                      {subject}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between gap-3 rounded-[1.75rem] border border-slate-200 bg-slate-50 p-5">
+              <div>
+                <p className="text-sm font-semibold text-slate-800">
+                  Topic selection
+                </p>
+                <p className="mt-1 text-sm text-slate-500">
+                  Pick the subject topic for this batch or leave it
+                  subject-wide.
+                </p>
+              </div>
+              <select
+                value={selectedSubjectName}
+                onChange={(e) => setSelectedSubjectName(e.target.value)}
+                className="rounded-3xl border border-slate-200 bg-white px-4 py-3 text-sm shadow-sm"
+              >
+                {subjectOptions.map((subject) => (
+                  <option key={subject} value={subject}>
+                    {subject}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="rounded-[1.75rem] border border-slate-200 bg-slate-50 p-5">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <p className="text-sm font-semibold text-slate-800">
+                    Add topics for {selectedSubjectName}
+                  </p>
+                  <p className="text-sm text-slate-500">
+                    Create multiple topics in one batch. Empty rows will be
+                    ignored.
+                  </p>
+                </div>
                 <button
                   type="button"
-                  onClick={() => removeTopicRow(index)}
-                  className="text-sm font-semibold text-rose-600 hover:text-rose-800"
+                  onClick={addTopicRow}
+                  className="rounded-full bg-slate-900 px-5 py-2 text-sm font-semibold text-white transition hover:bg-slate-800"
                 >
-                  Remove
+                  + Add row
                 </button>
-              ) : null}
+              </div>
             </div>
+
+            {topics.map((topicItem, index) => (
+              <div
+                key={index}
+                className="rounded-[1.75rem] border border-slate-200 bg-slate-50 p-5"
+              >
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <div>
+                    <p className="text-sm font-semibold text-slate-900">
+                      Topic {index + 1}
+                    </p>
+                    <p className="text-xs text-slate-500">
+                      Add title, description, notes, and optional image link.
+                    </p>
+                  </div>
+                  {topics.length > 1 ? (
+                    <button
+                      type="button"
+                      onClick={() => removeTopicRow(index)}
+                      className="rounded-full bg-rose-100 px-3 py-1 text-sm font-semibold text-rose-700 hover:bg-rose-200"
+                    >
+                      Remove
+                    </button>
+                  ) : null}
+                </div>
+
+                <div className="mt-4 space-y-4">
+                  <input
+                    value={topicItem.title}
+                    onChange={(e) =>
+                      updateTopic(index, "title", e.target.value)
+                    }
+                    placeholder="Topic title"
+                    className="w-full rounded-3xl border border-slate-200 bg-white px-4 py-3 text-sm shadow-sm"
+                  />
+                  <input
+                    value={topicItem.description}
+                    onChange={(e) =>
+                      updateTopic(index, "description", e.target.value)
+                    }
+                    placeholder="Short description (optional)"
+                    className="w-full rounded-3xl border border-slate-200 bg-white px-4 py-3 text-sm shadow-sm"
+                  />
+                  <textarea
+                    value={topicItem.content}
+                    onChange={(e) =>
+                      updateTopic(index, "content", e.target.value)
+                    }
+                    placeholder="Content / Notes"
+                    rows={4}
+                    className="w-full rounded-3xl border border-slate-200 bg-white px-4 py-3 text-sm shadow-sm"
+                  />
+                  <input
+                    value={topicItem.imageUrl}
+                    onChange={(e) =>
+                      updateTopic(index, "imageUrl", e.target.value)
+                    }
+                    placeholder="Image URL (optional)"
+                    className="w-full rounded-3xl border border-slate-200 bg-white px-4 py-3 text-sm shadow-sm"
+                  />
+                </div>
+              </div>
+            ))}
+
+            <button
+              disabled={saving}
+              className="mt-5 inline-flex w-full items-center justify-center rounded-3xl bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {saving ? "Saving topics…" : "Save topics"}
+            </button>
+          </div>
+        </form>
+
+        <aside className="space-y-6">
+          <div className="rounded-[2rem] border border-slate-200 bg-slate-950 p-6 text-white shadow-xl">
+            <h2 className="text-lg font-semibold">Upload Notes CSV</h2>
+            <p className="mt-3 text-sm text-slate-300">
+              Use the CSV uploader to create topics in bulk with the columns
+              below.
+            </p>
+            <div className="mt-4 rounded-3xl bg-slate-900 p-4 text-sm text-slate-300">
+              title,description,content,imageUrl
+            </div>
+          </div>
+
+          <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
+            <h2 className="text-lg font-semibold text-slate-900">Quick tips</h2>
+            <ul className="mt-4 space-y-3 text-sm text-slate-600">
+              <li>• Keep topic titles concise and easy to scan.</li>
+              <li>• Add descriptions to support quick review.</li>
+              <li>• Use image URLs only when relevant to the content.</li>
+            </ul>
+          </div>
+
+          <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
             <input
-              value={topicItem.title}
-              onChange={(e) => updateTopic(index, "title", e.target.value)}
-              placeholder="Topic title"
-              className="mt-3 w-full rounded-lg border border-slate-200 px-3 py-2"
-            />
-            <input
-              value={topicItem.description}
-              onChange={(e) =>
-                updateTopic(index, "description", e.target.value)
-              }
-              placeholder="Short description (optional)"
-              className="mt-3 w-full rounded-lg border border-slate-200 px-3 py-2"
-            />
-            <textarea
-              value={topicItem.content}
-              onChange={(e) => updateTopic(index, "content", e.target.value)}
-              placeholder="Content / Notes"
-              rows={5}
-              className="mt-3 w-full rounded-lg border border-slate-200 px-3 py-2"
-            />
-            <input
-              value={topicItem.imageUrl}
-              onChange={(e) => updateTopic(index, "imageUrl", e.target.value)}
-              placeholder="Image URL (optional)"
-              className="mt-3 w-full rounded-lg border border-slate-200 px-3 py-2"
+              type="file"
+              accept=".csv"
+              onChange={handleCsvUpload}
+              className="w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm"
             />
           </div>
-        ))}
-
-        <button
-          disabled={saving}
-          className="mt-4 rounded-lg bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white"
-        >
-          {saving ? "Saving..." : "Save Topics"}
-        </button>
-      </form>
-
-      <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-        <h2 className="text-lg font-semibold text-slate-900">
-          Upload Notes CSV
-        </h2>
-        <p className="mt-1 text-sm text-slate-500">
-          CSV columns: title,description,content,imageUrl
-        </p>
-        <input
-          type="file"
-          accept=".csv"
-          onChange={handleCsvUpload}
-          className="mt-3 block w-full text-sm"
-        />
-      </section>
+        </aside>
+      </div>
     </div>
   );
 }

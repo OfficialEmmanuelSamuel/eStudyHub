@@ -2,6 +2,7 @@
 
 import type { ComponentType } from "react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import {
   FaBell,
@@ -14,8 +15,10 @@ import {
   FaUser,
   FaUsers,
   FaHouse,
+  FaXmark,
 } from "react-icons/fa6";
 import { useAuth } from "@/hooks/useAuth";
+import { loadNotifications } from "@/lib/notificationStorage";
 
 type NavItem = {
   href: string;
@@ -45,10 +48,18 @@ type SidebarProps = {
 export default function Sidebar({ mobileOpen = false, onClose }: SidebarProps) {
   const pathname = usePathname();
   const { user } = useAuth();
+  const [unreadCount, setUnreadCount] = useState(0);
 
   const fullName =
     user?.displayName?.trim() ||
     (user?.email ? user.email.split("@")[0] : "Student");
+
+  useEffect(() => {
+    const notifications = loadNotifications();
+    setUnreadCount(
+      notifications.filter((notification) => notification.unread).length,
+    );
+  }, []);
 
   return (
     <>
@@ -91,6 +102,11 @@ export default function Sidebar({ mobileOpen = false, onClose }: SidebarProps) {
                 >
                   <Icon className="text-base" />
                   {item.label}
+                  {item.href === "/notifications" && unreadCount > 0 ? (
+                    <span className="ml-auto rounded-full bg-rose-500 px-2 py-0.5 text-[11px] font-semibold text-white">
+                      {unreadCount}
+                    </span>
+                  ) : null}
                 </Link>
               );
             })}
@@ -108,12 +124,14 @@ export default function Sidebar({ mobileOpen = false, onClose }: SidebarProps) {
       />
 
       <aside
+        id="mobile-sidebar"
+        aria-hidden={!mobileOpen}
         className={`fixed inset-y-0 left-0 z-50 flex h-screen w-72 flex-col overflow-y-auto border-r border-slate-200 bg-white px-5 py-6 transition-transform duration-300 md:hidden ${
           mobileOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="p-4">
-          <div className="flex flex-col items-center text-center">
+        <div className="flex items-center justify-between gap-3 p-4">
+          <div className="flex flex-1 flex-col items-center text-center">
             {user?.photoURL ? (
               <img
                 src={user.photoURL}
@@ -125,8 +143,18 @@ export default function Sidebar({ mobileOpen = false, onClose }: SidebarProps) {
                 <FaUser />
               </div>
             )}
-            <p className="mt-3 text-sm font-semibold text-slate-900">{fullName}</p>
+            <p className="mt-3 text-sm font-semibold text-slate-900">
+              {fullName}
+            </p>
           </div>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close menu"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-slate-100 text-slate-600 transition hover:bg-slate-200"
+          >
+            <FaXmark />
+          </button>
         </div>
 
         <nav className="mt-6 flex-1 space-y-1">

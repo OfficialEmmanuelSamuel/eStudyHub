@@ -22,6 +22,10 @@ import { useAuth } from "@/hooks/useAuth";
 import type { IconType } from "react-icons";
 import LoadingScreen from "@/components/LoadingScreen";
 import { API_BASE } from "@/lib/apiBase";
+import {
+  loadNotifications,
+  type AppNotification,
+} from "@/lib/notificationStorage";
 
 type LeaderboardUser = {
   uid: string;
@@ -93,6 +97,7 @@ export default function DashboardPage() {
       streakDays: 0,
     },
   });
+  const [notifications, setNotifications] = useState<AppNotification[]>([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -117,8 +122,12 @@ export default function DashboardPage() {
           pageSize: String(pageSize),
           search: search.trim(),
         });
-        const res = await fetch(`${API_BASE}/api/users/leaderboard?${query}`);
-        if (!res.ok) throw new Error("failed");
+        const url = `${API_BASE}/api/users/leaderboard?${query}`;
+        const res = await fetch(url);
+        if (!res.ok) {
+          const errorData = await res.text();
+          throw new Error(`HTTP ${res.status}: ${errorData}`);
+        }
         const data = (await res.json()) as {
           total: number;
           users: Array<{
@@ -165,11 +174,17 @@ export default function DashboardPage() {
         console.warn("Could not load user overview.");
       }
     };
-    loadOverview();
+    if (user?.uid) {
+      loadOverview();
+    }
     return () => {
       mounted = false;
     };
   }, [user?.uid]);
+
+  useEffect(() => {
+    setNotifications(loadNotifications());
+  }, []);
 
   useEffect(() => {
     let mounted = true;
@@ -238,6 +253,46 @@ export default function DashboardPage() {
         <p className="mt-3 max-w-2xl rounded-lg bg-white/10 px-3 py-2 text-sm text-slate-100">
           Small progress daily builds strong exam confidence.
         </p>
+      </motion.section>
+
+      <motion.section
+        {...fadeUp}
+        className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"
+      >
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div>
+            <p className="text-sm text-slate-500">Notifications</p>
+            <h2 className="mt-1 text-xl font-semibold text-slate-900">
+              {
+                notifications.filter((notification) => notification.unread)
+                  .length
+              }{" "}
+              new alert
+              {notifications.filter((notification) => notification.unread)
+                .length === 1
+                ? ""
+                : "s"}
+            </h2>
+            <p className="mt-2 text-sm text-slate-600">
+              Stay on top of updates and reminders for your study progress.
+            </p>
+          </div>
+          <div className="rounded-3xl bg-slate-950 px-4 py-3 text-sm text-white">
+            {notifications.length} total notifications
+          </div>
+        </div>
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          <button
+            type="button"
+            onClick={() => window.location.assign("/notifications")}
+            className="rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800"
+          >
+            View all notifications
+          </button>
+          <div className="rounded-full bg-emerald-50 px-3 py-2 text-sm font-semibold text-emerald-800">
+            Latest: {notifications[0]?.title || "No new alerts"}
+          </div>
+        </div>
       </motion.section>
 
       <motion.section

@@ -145,17 +145,28 @@ const fadeUp = {
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen overflow-hidden bg-slate-950 text-slate-100">
+    <div className="min-h-screen overflow-hidden bg-slate-50 text-slate-950">
       <div className="mx-auto px-3 lg:max-w-6xl">
         <motion.header
           {...fadeUp}
           className="flex items-center justify-between py-6"
         >
-          <div className="text-2xl font-bold tracking-tight">eStudy Hub</div>
+          <Link
+            href="/"
+            className="inline-flex items-center gap-3 w-40 lg:w-150"
+          >
+            <Image
+              src="/eStudy.png"
+              alt="eStudy Hub"
+              width={150}
+              height={40}
+              className="h-10 w-auto object-contain"
+            />
+          </Link>
 
           <Link
             href="/auth/register"
-            className="rounded-full bg-cyan-400 px-5 py-2 text-sm font-semibold text-slate-900 hover:bg-cyan-300"
+            className="rounded-full bg-slate-900 px-5 py-2 text-sm font-semibold text-emerald-200 shadow-sm shadow-cyan-200/40 transition hover:bg-slate-400"
           >
             Get Started
           </Link>
@@ -163,45 +174,45 @@ export default function LandingPage() {
 
         <motion.section
           {...fadeUp}
-          className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-slate-900 to-cyan-950/40 px-5 py-5 md:px-14"
+          className="relative overflow-hidden rounded-3xl bg-emerald-200/10 border border-slate-200 px-5 py-5 shadow-sm md:px-14"
         >
-          <div className="absolute -top-16 -right-16 h-56 w-56 rounded-full bg-cyan-400/20 blur-3xl" />
-          <div className="absolute -bottom-24 -left-16 h-64 w-64 rounded-full bg-blue-500/20 blur-3xl" />
+          <div className="absolute -top-16 -right-16 h-56 w-56 rounded-full bg-emerald-200/40 blur-3xl" />
+          <div className="absolute -bottom-24 -left-16 h-64 w-64 rounded-full bg-emerald-200/30 blur-3xl" />
           <div className="relative grid gap-5 md:grid-cols-2 md:items-center">
             <div>
-              <p className="mb-4 inline-block rounded-full border border-cyan-300/40 bg-cyan-300/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-cyan-200">
+              <p className="mb-4 inline-block rounded-full border border-slate-900 bg-slate-900 px-4 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-emerald-200">
                 AI Learning Platform
               </p>
-              <h1 className="text-4xl font-extrabold leading-tight md:text-5xl">
+              <h1 className="text-4xl font-extrabold leading-tight text-slate-900 md:text-5xl">
                 Learn Faster With an AI Tutor Built for Serious Students
               </h1>
-              <p className="mt-5 max-w-xl text-slate-300">
+              <p className="mt-5 max-w-xl font-semibold text-slate-800">
                 eStudy Hub combines adaptive learning, instant explanations, and
                 intelligent quizzes so you can master topics with confidence.
               </p>
               <div className="mt-8 flex flex-row gap-3">
-                <StartLearningButton className="rounded-xl bg-cyan-400 px-6 py-3 text-center text-sm font-semibold text-slate-900 hover:bg-cyan-300">
+                <StartLearningButton className="rounded-xl bg-slate-900 px-6 py-3 text-center text-sm font-semibold text-emerald-200 shadow-sm shadow-cyan-200/40 transition hover:bg-slate-900">
                   Start Learning
                 </StartLearningButton>
                 <Link
                   href="/dashboard"
-                  className="rounded-xl border border-white/20 px-6 py-3 text-center text-sm text-white hover:bg-white/10"
+                  className="rounded-xl border border-emerald-700 bg-emerald-700 px-6 py-3 text-center text-sm text-white transition hover:bg-emerald-900"
                 >
                   My Dashboard
                 </Link>
               </div>
               <div className="mt-8 grid grid-cols-3 gap-4 text-sm">
                 <div>
-                  <p className="text-2xl font-bold text-cyan-300">25k+</p>
-                  <p className="text-slate-400">Active Students</p>
+                  <p className="text-2xl font-bold text-slate-600">25k+</p>
+                  <p className="text-slate-500">Active Students</p>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-cyan-300">1.2M+</p>
-                  <p className="text-slate-400">Questions Solved</p>
+                  <p className="text-2xl font-bold text-slate-600">1.2M+</p>
+                  <p className="text-slate-500">Questions Solved</p>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-cyan-300">4.9/5</p>
-                  <p className="text-slate-400">Average Rating</p>
+                  <p className="text-2xl font-bold text-slate-600">4.9/5</p>
+                  <p className="text-slate-500">Average Rating</p>
                 </div>
               </div>
             </div>
@@ -225,7 +236,7 @@ export default function LandingPage() {
                   alt="Student learning with AI tutor"
                   width={700}
                   height={460}
-                  className="h-auto w-full rounded-2xl object-cover shadow-2xl shadow-cyan-900/35"
+                  className="h-auto w-full rounded-2xl object-cover shadow-2xl shadow-emerald-900/35"
                   priority
                 />
               </motion.div>
@@ -244,25 +255,26 @@ export default function LandingPage() {
                   alt="Progress dashboard preview"
                   width={700}
                   height={460}
-                  className="h-auto w-full rounded-2xl object-cover shadow-2xl shadow-cyan-950/35"
+                  className="h-auto w-full rounded-2xl object-cover shadow-2xl shadow-emerald-950/35"
+                  priority
                 />
               </motion.div>
             </motion.div>
           </div>
         </motion.section>
 
-        <motion.section id="features" className="py-8 px-3" {...fadeUp}>
-          <div className="mx-auto max-w-5xl space-y-6">
-            <div className="grid gap-6 md:grid-cols-3">
+        <motion.section id="features" className="py-6 px-3" {...fadeUp}>
+          <div className="mx-auto max-w-5xl space-y-4">
+            <div className="grid gap-3 md:grid-cols-3">
               {features.map((feature) => (
                 <article
                   key={feature.title}
-                  className="rounded-3xl border border-white/10 bg-slate-900/80 p-6 text-white shadow-xl"
+                  className="rounded-3xl shadow-sm shadow-slate-200 bg-gradient-to-br from-slate-900 to-slate-900 shadow-sm shadow-white/10 p-6 text-white"
                 >
                   <h2 className="text-lg font-semibold text-white">
                     {feature.title}
                   </h2>
-                  <p className="mt-4 text-sm text-slate-300">
+                  <p className="mt-2 text-sm text-white">
                     {feature.description}
                   </p>
                 </article>
@@ -273,16 +285,15 @@ export default function LandingPage() {
 
         <motion.section className="space-y-10 py-8 px-3" {...fadeUp}>
           <div className="mx-auto max-w-5xl">
-            <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <p className="text-sm uppercase tracking-[0.16em] text-cyan-300">
-                  Subjects covered
-                </p>
-                <h2 className="mt-3 text-3xl font-semibold text-white">
-                  Learn what matters most.
-                </h2>
-              </div>
+            <div className="text-center">
+              <p className="text-sm uppercase tracking-[0.16em] font-semibold text-emerald-600">
+                Subjects covered
+              </p>
+              <h2 className="mt-3 text-3xl font-semibold text-slate-950">
+                Learn what matters most.
+              </h2>
             </div>
+            <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"></div>
 
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {subjects.map((subject) => {
@@ -290,13 +301,13 @@ export default function LandingPage() {
                 return (
                   <article
                     key={subject.name}
-                    className="rounded-3xl border border-white/10 bg-slate-900/80 p-6 text-white shadow-xl"
+                    className="rounded-3xl shadow-sm shadow-slate-300 bg-white p-6 text-slate-950"
                   >
-                    <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-400/10 text-cyan-300">
-                      <Icon className="h-5 w-5" />
+                    <div className="mb-2 inline-flex h-8 w-8 items-center justify-center rounded-xl bg-slate-900 text-emerald-600">
+                      <Icon className="h-4 w-4" />
                     </div>
                     <h3 className="text-xl font-semibold">{subject.name}</h3>
-                    <p className="mt-3 text-sm text-slate-300">
+                    <p className="mt-2 font-medium text-sm text-slate-600">
                       Practical lessons, quizzes, and examples to build real
                       exam confidence.
                     </p>
@@ -309,11 +320,11 @@ export default function LandingPage() {
 
         <motion.section className="space-y-8 py-8 px-3" {...fadeUp}>
           <div className="mx-auto max-w-5xl">
-            <div className="mb-8">
-              <p className="text-sm uppercase tracking-[0.16em] text-cyan-300">
+            <div className="mb-8 text-center">
+              <p className="text-sm uppercase tracking-[0.16em] font-semibold text-emerald-600">
                 Why students choose us
               </p>
-              <h2 className="mt-3 text-3xl font-semibold text-white">
+              <h2 className="mt-3 text-3xl font-semibold text-slate-950">
                 Built for better learning habits.
               </h2>
             </div>
@@ -324,15 +335,15 @@ export default function LandingPage() {
                 return (
                   <article
                     key={card.title}
-                    className={`rounded-3xl border border-white/10 p-6 shadow-xl ${card.tone}`}
+                    className={`rounded-3xl shadow-sm shadow-slate-200 bg-white p-6 shadow-sm ${card.tone}`}
                   >
-                    <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-950/70 text-white shadow-sm">
+                    <div className="mb-2 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-100 text-slate-950 shadow-sm">
                       <Icon className="h-5 w-5" />
                     </div>
-                    <h3 className="text-xl font-semibold text-white">
+                    <h3 className="text-xl font-semibold text-slate-950">
                       {card.title}
                     </h3>
-                    <p className="mt-3 text-sm text-slate-200">
+                    <p className="mt-1 text-sm font-medium text-slate-600">
                       {card.description}
                     </p>
                   </article>
@@ -344,11 +355,11 @@ export default function LandingPage() {
 
         <motion.section className="space-y-8 py-8 px-3" {...fadeUp}>
           <div className="mx-auto max-w-5xl">
-            <div className="mb-8">
-              <p className="text-sm uppercase tracking-[0.16em] text-cyan-300">
+            <div className="mb-8 text-center">
+              <p className="text-sm uppercase tracking-[0.16em] font-semibold text-emerald-600">
                 Our curriculum
               </p>
-              <h2 className="mt-3 text-3xl font-semibold text-white">
+              <h2 className="mt-3 text-3xl font-semibold text-slate-950">
                 Content mapped to the curriculum you need.
               </h2>
             </div>
@@ -357,10 +368,10 @@ export default function LandingPage() {
               {curriculumCards.map((card) => (
                 <article
                   key={card.title}
-                  className={`rounded-3xl border border-white/10 bg-slate-900/80 p-6 text-white shadow-xl ${card.accent}`}
+                  className={`rounded-3xl shadow-sm shadow-slate-300 bg-white p-6 text-slate-950 shadow-sm ${card.accent}`}
                 >
                   <h3 className="text-xl font-semibold">{card.title}</h3>
-                  <p className="mt-3 text-sm text-slate-300">
+                  <p className="mt-3 text-sm font-medium text-slate-600">
                     {card.description}
                   </p>
                 </article>
@@ -369,7 +380,19 @@ export default function LandingPage() {
           </div>
         </motion.section>
 
-        <TestimonialsSwiper testimonials={testimonials} />
+        <motion.section className="space-y-8 py-8 px-3" {...fadeUp}>
+          <div className="mx-auto max-w-5xl">
+            <div className="mb-8 text-center">
+              <p className="text-sm uppercase tracking-[0.16em] font-semibold text-emerald-600">
+                Reviews from students
+              </p>
+              <h2 className="mt-3 text-3xl font-semibold text-slate-950">
+                Real feedback from real students.
+              </h2>
+            </div>
+            <TestimonialsSwiper testimonials={testimonials} />
+          </div>
+        </motion.section>
 
         <LandingFooter />
       </div>
